@@ -9,10 +9,11 @@ class Api::V1::BooksController < ApplicationController
   end
 
   def create
-    book = Book.new(book_params)
+    author = Author.create!(author_params)
+    book = Book.new(book_params.merge(author_id: author.id))
 
     if book.save
-      render json: book, status: :created
+      render json: BookRepresenter.new(book).as_json, status: :created
     else
       render json: book.errors, status: :unprocessable_entity
     end
@@ -27,8 +28,12 @@ class Api::V1::BooksController < ApplicationController
 
   private
 
+  def author_params
+    params.require(:author).permit(:first_name, :last_name, :age)
+  end
+
   def book_params
-    params.require(:book).permit(:title, :author)
+    params.require(:book).permit(:title)
 
     # params.permit(:title, :author)
   end
