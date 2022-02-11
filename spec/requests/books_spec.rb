@@ -18,8 +18,8 @@ describe 'Books API', type: :request do
     it 'create new book' do
       expect {
         post '/api/v1/books', params: { 
-          book: {titile: 'The Martian'},
-          author: { first_name: 'Andy', last_name: 'Bowel', age: '32'}
+          book: {title: 'The Martian'},
+          author: {first_name: 'Andy', last_name: 'Weir', age: '52'}
          }
       }.to change { Book.count }.from(0).to(1)
 
@@ -29,8 +29,8 @@ describe 'Books API', type: :request do
         {
           'id': 1,
           'name': 'The Martian',
-          'author_name': 'Andy Bowel',
-          'author_age': '32'
+          'author_name': 'Andy Weir',
+          'author_age': '52'
         }
     )
       
